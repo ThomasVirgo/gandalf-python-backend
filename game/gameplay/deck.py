@@ -26,6 +26,30 @@ class Suit(enum.Enum):
     SPADE = "spade"
 
 
+VALUE_MAP = {
+    "A": Value.ACE,
+    "2": Value.TWO,
+    "3": Value.THREE,
+    "4": Value.FOUR,
+    "5": Value.FIVE,
+    "6": Value.SIX,
+    "7": Value.SEVEN,
+    "8": Value.EIGHT,
+    "9": Value.NINE,
+    "10": Value.TEN,
+    "J": Value.JACK,
+    "Q": Value.QUEEN,
+    "K": Value.KING,
+}
+
+SUIT_MAP = {
+    "diamond": Suit.DIAMOND,
+    "heart": Suit.HEART,
+    "club": Suit.CLUB,
+    "spade": Suit.SPADE,
+}
+
+
 class Card:
     def __init__(self, value: Value, suit: Suit) -> None:
         self.value = value
@@ -36,32 +60,9 @@ class Card:
 
     @classmethod
     def card_from_str(cls, card_str: str):
-        value_map = {
-            "A": Value.ACE,
-            "2": Value.TWO,
-            "3": Value.THREE,
-            "4": Value.FOUR,
-            "5": Value.FIVE,
-            "6": Value.SIX,
-            "7": Value.SEVEN,
-            "8": Value.EIGHT,
-            "9": Value.NINE,
-            "10": Value.TEN,
-            "J": Value.JACK,
-            "Q": Value.QUEEN,
-            "K": Value.KING,
-        }
-
-        suit_map = {
-            "diamond": Suit.DIAMOND,
-            "heart": Suit.HEART,
-            "club": Suit.CLUB,
-            "spade": Suit.SPADE,
-        }
-
         value, suit = card_str.split("_")  # example string --> 10_spade
 
-        return cls(value_map[value], suit_map[suit])
+        return cls(VALUE_MAP[value], SUIT_MAP[suit])
 
     @property
     def points(self) -> int:
@@ -91,3 +92,16 @@ class FullDeck:
 class Cards:
     def __init__(self, cards: list[Card]) -> None:
         self.cards = cards
+
+    def __len__(self):
+        return len(self.cards)
+
+    @classmethod
+    def cards_from_str(cls, str):
+        """str should be of the form "10_spade,5_heart,6_diamond" ...."""
+        card_strs = str.split(",")
+        cards = []
+        for s in card_strs:
+            value, suit = s.split("_")
+            cards.append(Card(VALUE_MAP[value], SUIT_MAP[suit]))
+        return cls(cards)

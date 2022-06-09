@@ -50,3 +50,9 @@ class TestDeckandCards(TestCase):
 
         self.assertEqual(card_1, card_2)
         self.assert_(card_2 != card_3)
+
+    def test_cards_from_str(self):
+        cards_str = "10_spade,5_heart,9_diamond,J_club,A_club"
+        cards = Cards.cards_from_str(cards_str)
+        self.assertEqual(len(cards), 5)
+        self.assertEqual(cards.cards[0], Card(Value.TEN, Suit.SPADE))
