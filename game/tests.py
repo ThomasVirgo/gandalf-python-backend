@@ -9,6 +9,7 @@ class TestDeckandCards(TestCase):
     def test_full_deck(self):
         deck = FullDeck()
         deck.shuffle()
+        print(deck)
         self.assertEqual(len(deck.cards), 52)
 
     def test_card_from_str(self):
@@ -56,3 +57,15 @@ class TestDeckandCards(TestCase):
         cards = Cards.cards_from_str(cards_str)
         self.assertEqual(len(cards), 5)
         self.assertEqual(cards.cards[0], Card(Value.TEN, Suit.SPADE))
+
+
+class TestState(TestCase):
+    pass
+
+
+class TestPlayer(TestCase):
+    pass
+
+
+class TestRound(TestCase):
+    pass

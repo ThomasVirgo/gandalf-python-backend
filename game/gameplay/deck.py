@@ -54,9 +54,17 @@ class Card:
     def __init__(self, value: Value, suit: Suit) -> None:
         self.value = value
         self.suit = suit
+        self.card_position = None
+        self.face_up = False
+
+    def assign_card_position(self, pos):
+        self.card_position = pos
 
     def __repr__(self) -> str:
         return f"Card(value={self.value.name}, suit={self.suit.name})"
+
+    def __eq__(self, other: Card) -> bool:
+        return self.value == other.value
 
     @classmethod
     def card_from_str(cls, card_str: str):
@@ -71,8 +79,8 @@ class Card:
             return 10
         return self.value.value
 
-    def __eq__(self, other: Card) -> bool:
-        return self.value == other.value
+    def turn_over(self):
+        self.face_up = True
 
 
 class FullDeck:
@@ -83,7 +91,10 @@ class FullDeck:
         return len(self.cards)
 
     def __str__(self) -> str:
-        return f"Full deck -> {len(self.cards)} cards"
+        sum_str = ""
+        for c in self.cards:
+            sum_str += f"{c.value.name} of {c.suit.name} \n"
+        return sum_str
 
     def shuffle(self):
         shuffle(self.cards)
@@ -105,3 +116,20 @@ class Cards:
             value, suit = s.split("_")
             cards.append(Card(VALUE_MAP[value], SUIT_MAP[suit]))
         return cls(cards)
+
+
+class Deck:
+    def __init__(self, cards: list[Card]) -> None:
+        self.cards = cards
+
+    def deck_from_str(cls, cards_str: str):
+        pass
+
+
+class FaceDownDeck(Deck):
+    def create_initial_deck(self):
+        pass
+
+
+class FaceUpDeck(Deck):
+    pass

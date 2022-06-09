@@ -1,13 +1,13 @@
-import enum
+from __future__ import annotations
+
+from dataclasses import dataclass
+from .player import Player
+from .deck import Cards
 
 
-class CardPosition:
-    LEFT = 1
-    LEFT_MIDDLE = 2
-    RIGHT_MIDDLE = 3
-    RIGHT = 4
-
-
-class State:
-    def __init__(self) -> None:
-        pass
+@dataclass
+class GameState:
+    players: list[Player]
+    turn: Player
+    is_slap: bool
+    is_gandalf: bool
